@@ -1,10 +1,13 @@
-import express, { Express, NextFunction, Request, Response } from "express";
+import express, { Express, Response } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import dotenv from "dotenv";
+import apicache from "apicache";
 
 import v1Routes from "./v1/routes";
 import { sendError, sendSuccess } from "./utils/response-template";
+import errorHandlerMiddleware from "./middleware/error-handler";
+import limiter from "./middleware/request-limit";
 
 // Load environment variables from .env file
 dotenv.config();
@@ -12,9 +15,19 @@ dotenv.config();
 const app: Express = express();
 const PORT: number = Number(process.env.PORT) || 3000;
 
+const cache = apicache.options({
+  statusCodes: {
+    include: [200],
+  },
+}).middleware;
+
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
+
+app.use(limiter);
+
+app.use(cache("5 minutes"));
 
 app.get(["/", "/v1"], (_, res: Response) => {
   sendSuccess(res, {
@@ -63,11 +76,7 @@ app.get("*", (_, res: Response) => {
   sendError(res, "API Path Not Found", 404);
 });
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  console.error(err.stack);
-  sendError(res, "Something went wrong!");
-});
+app.use(errorHandlerMiddleware);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
