@@ -2,7 +2,7 @@ import express, { Express, Response } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import dotenv from "dotenv";
-// import apicache from "apicache";
+import apicache from "apicache";
 
 import v1Routes from "./v1/routes";
 import { sendError, sendSuccess } from "./utils/response-template";
@@ -15,11 +15,11 @@ dotenv.config();
 const app: Express = express();
 const PORT: number = Number(process.env.PORT) || 3000;
 
-// const cache = apicache.options({
-//   statusCodes: {
-//     include: [200],
-//   },
-// }).middleware;
+const cache = apicache.options({
+  statusCodes: {
+    include: [200],
+  },
+}).middleware;
 
 app.use(helmet());
 app.use(cors());
@@ -27,7 +27,7 @@ app.use(express.json());
 
 app.use(limiter);
 
-// app.use(cache("5 minutes"));
+app.use(cache("5 minutes"));
 
 app.get(["/", "/v1"], (_, res: Response) => {
   sendSuccess(res, {
