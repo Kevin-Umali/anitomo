@@ -12,22 +12,6 @@ router.get("/", (_, res: Response) => {
   });
 });
 
-router.get(
-  "/:query",
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const query = req.params.query as string;
-
-      const crunchyroll = await ANIME.Crunchyroll.create();
-      const result = await crunchyroll.search(query);
-
-      sendSuccess(res, result);
-    } catch (error) {
-      next(error);
-    }
-  },
-);
-
 router.get("/info", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id = req.query.id as string;
@@ -63,6 +47,22 @@ router.get(
       const crunchyroll = await ANIME.Crunchyroll.create();
 
       const result = await crunchyroll.fetchEpisodeSources(episodeId);
+
+      sendSuccess(res, result);
+    } catch (error) {
+      next(error);
+    }
+  },
+);
+
+router.get(
+  "/:query",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const query = req.params.query as string;
+
+      const crunchyroll = await ANIME.Crunchyroll.create();
+      const result = await crunchyroll.search(query);
 
       sendSuccess(res, result);
     } catch (error) {

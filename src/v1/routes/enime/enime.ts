@@ -14,24 +14,11 @@ router.get("/", (_, res: Response) => {
   });
 });
 
-router.get(
-  "/:query",
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const query = req.params.query as string;
-
-      const result = await enime.search(query);
-
-      sendSuccess(res, result);
-    } catch (error) {
-      next(error);
-    }
-  },
-);
-
 router.get("/info", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id = req.query.id as string;
+
+    console.log("query", id);
 
     if (typeof id === "undefined") {
       sendError(res, "id is required", 400);
@@ -58,6 +45,23 @@ router.get(
       }
 
       const result = await enime.fetchEpisodeSources(episodeId);
+
+      sendSuccess(res, result);
+    } catch (error) {
+      next(error);
+    }
+  },
+);
+
+router.get(
+  "/:query",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const query = req.params.query as string;
+
+      const result = await enime.search(query);
+
+      console.log("query", query);
 
       sendSuccess(res, result);
     } catch (error) {

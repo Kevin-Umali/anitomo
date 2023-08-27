@@ -22,22 +22,6 @@ router.get("/", (_, res: Response) => {
 });
 
 router.get(
-  "/:query",
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const query = req.params.query as string;
-      const page = parseInt(req.query.page as string) || 1;
-
-      const result = await gogoanime.search(query, page);
-
-      sendSuccess(res, result);
-    } catch (error) {
-      next(error);
-    }
-  },
-);
-
-router.get(
   "/info/:id",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -111,6 +95,22 @@ router.get(
       const page = parseInt(req.query.page as string) || 1;
 
       const result = await gogoanime.fetchRecentEpisodes(page, type);
+
+      sendSuccess(res, result);
+    } catch (error) {
+      next(error);
+    }
+  },
+);
+
+router.get(
+  "/:query",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const query = req.params.query as string;
+      const page = parseInt(req.query.page as string) || 1;
+
+      const result = await gogoanime.search(query, page);
 
       sendSuccess(res, result);
     } catch (error) {

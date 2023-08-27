@@ -15,22 +15,6 @@ router.get("/", (_, res: Response) => {
 });
 
 router.get(
-  "/:query",
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const query = req.params.query as string;
-      const page = parseInt(req.query.page as string) || 1;
-
-      const result = await zoro.search(query, page);
-
-      sendSuccess(res, result);
-    } catch (error) {
-      next(error);
-    }
-  },
-);
-
-router.get(
   "/recent-episodes",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -80,6 +64,22 @@ router.get(
       }
 
       const result = await zoro.fetchEpisodeSources(episodeId, server);
+
+      sendSuccess(res, result);
+    } catch (error) {
+      next(error);
+    }
+  },
+);
+
+router.get(
+  "/:query",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const query = req.params.query as string;
+      const page = parseInt(req.query.page as string) || 1;
+
+      const result = await zoro.search(query, page);
 
       sendSuccess(res, result);
     } catch (error) {

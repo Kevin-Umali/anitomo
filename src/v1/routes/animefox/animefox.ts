@@ -34,21 +34,6 @@ router.get(
   },
 );
 
-router.get(
-  "/:query",
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const query = req.params.query as string;
-
-      const result = await animefox.search(query);
-
-      sendSuccess(res, result);
-    } catch (error) {
-      next(error);
-    }
-  },
-);
-
 router.get("/info", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id = req.query.id as string;
@@ -78,6 +63,21 @@ router.get(
       }
 
       const result = await animefox.fetchEpisodeSources(episodeId);
+
+      sendSuccess(res, result);
+    } catch (error) {
+      next(error);
+    }
+  },
+);
+
+router.get(
+  "/:query",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const query = req.params.query as string;
+
+      const result = await animefox.search(query);
 
       sendSuccess(res, result);
     } catch (error) {
