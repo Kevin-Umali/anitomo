@@ -25,13 +25,17 @@ The API provides the following endpoints for retrieving anime information from d
 
 For more details about each endpoint, refer to the respective source files in the `src/v1/routes` directory.
 
+## Documentation
+
+For detailed API documentation and usage examples, please refer to the [Anitomo API Documentation](https://documenter.getpostman.com/view/29367088/2s9Y5YT3H9).
+
 ## Acknowledgments
 
 Special thanks to the following packages used in this project:
 
-- [Consumet.ts](https://link-to-consumet.ts-package)
-- [Website](https://link-to-website-package)
-- [Providers Status](https://link-to-providers-status-package)
+- [Consumet.ts](https://github.com/consumet/consumet.ts)
+- [Website](https://github.com/consumet/consumet.org)
+- [Providers Status](https://github.com/consumet/providers-status)
 
 ## License
 
