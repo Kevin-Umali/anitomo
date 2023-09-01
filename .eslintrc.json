@@ -3,13 +3,17 @@
     "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
-        "plugin:prettier/recommended"
+        "plugin:prettier/recommended",
+        "plugin:jest/recommended"
     ],
     "parserOptions": {
         "ecmaVersion": 2020,
         "sourceType": "module"
     },
-    "plugins": ["import", "unused-imports"],
+    "env": {
+        "jest": true
+    },
+    "plugins": ["import", "unused-imports", "jest"],
     "rules": {
         "prettier/prettier": [
             "error",
@@ -23,4 +27,3 @@
         "@typescript-eslint/no-explicit-any": "off"
     }
 }
-  
