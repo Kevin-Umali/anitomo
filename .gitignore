@@ -16,10 +16,6 @@ dist/
 *.sln
 *.sw*
 
-# Dependency lock files
-package-lock.json
-yarn.lock
-
 # Environment variables
 .env
 
