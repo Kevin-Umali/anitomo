@@ -1,0 +1,40 @@
+# .github/labeler.yml
+
+# Main Source Code
+source:
+  - src/*.ts
+  - src/middleware/*.ts
+  - src/utils/*.ts
+
+# v1 main module
+v1:
+  - src/v1/*.ts
+
+# Sub-modules under v1 routes
+animefox:
+  - src/v1/routes/animefox/*.ts
+
+animepahe:
+  - src/v1/routes/animepahe/*.ts
+
+animesaturn:
+  - src/v1/routes/animesaturn/*.ts
+
+crunchyroll:
+  - src/v1/routes/crunchyroll/*.ts
+
+enime:
+  - src/v1/routes/enime/*.ts
+
+gogoanime:
+  - src/v1/routes/gogoanime/*.ts
+
+marin:
+  - src/v1/routes/marin/*.ts
+
+zoro:
+  - src/v1/routes/zoro/*.ts
+
+# Tests
+tests:
+  - src/__tests__/*.ts
