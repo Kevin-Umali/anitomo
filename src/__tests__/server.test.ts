@@ -6,7 +6,6 @@ describe("Server Routes", () => {
     const res = await request(app).get("/");
     expect(res.status).toBe(200);
 
-    // Parse the response body as JSON
     const responseBody = JSON.parse(res.text);
 
     expect(responseBody.data.intro).toBe("Welcome to the anime API");
@@ -17,7 +16,6 @@ describe("Server Routes", () => {
     const res = await request(app).get("/invalidRoute");
     expect(res.status).toBe(404);
 
-    // Parse the response body as JSON
     const responseBody = JSON.parse(res.text);
 
     expect(responseBody).toHaveProperty("error", "API Path Not Found");
