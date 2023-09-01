@@ -2,7 +2,7 @@ name: ESLint
 
 on:
   push:
-    branches: [main] # assuming main is your default branch
+    branches: [main] # Assuming main is your default branch
   pull_request:
     branches: [main]
   schedule:
@@ -10,47 +10,19 @@ on:
 
 jobs:
   eslint:
-    name: Run eslint scanning
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      security-events: write
-      actions: read
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
-      # Set up Node.js version 16
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v2
         with:
-          node-version: "16"
+          node-version: "16" # You can adjust the version as needed
 
-      # Cache node_modules
-      - name: Cache Node.js modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-node-
-
-      - name: Install ESLint
-        run: |
-          npm install eslint@8.10.0
-          npm install @microsoft/eslint-formatter-sarif@2.1.7
+      - name: Install dependencies
+        run: npm install
 
       - name: Run ESLint
-        run: |
-          npx eslint . \
-          --config .eslintrc.js \
-          --ext .js,.jsx,.ts,.tsx \
-          --format @microsoft/eslint-formatter-sarif \
-          --output-file eslint-results.sarif
-        continue-on-error: true
-
-      - name: Upload analysis results to GitHub
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: eslint-results.sarif
-          wait-for-processing: true
+        run: npm run lint # Adjust the lint command as per your project setup
